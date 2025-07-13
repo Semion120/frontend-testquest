@@ -3,7 +3,7 @@ import type ICity from "@/types/city"
 
 async function fetchCitizens( ) {
   try {
-    const result: ICitizen[] = await (await fetch('http://api.convert-file.ru/cityzen')).json()
+    const result: ICitizen[] = await (await fetch('https://api.convert-file.ru/cityzen')).json()
     return {data:result, error:undefined}
   } catch(err: unknown) {
     return {
@@ -14,7 +14,7 @@ async function fetchCitizens( ) {
 
 async function fetchCities( ) {
   try {
-    const result: ICity[] = await (await fetch('http://api.convert-file.ru/city')).json()
+    const result: ICity[] = await (await fetch('https://api.convert-file.ru/city')).json()
     return {data:result, error:undefined}
   } catch(err: unknown) {
     return {
@@ -35,7 +35,7 @@ async function addUserToDataBase(newCitizen: ICitizen) {
     newCitizenDatabase.groups.push({type: key, name: newCitizen.groups[key]})
   }
 
-  const result = await fetch('http://api.convert-file.ru/cityzen/add', {
+  const result = await fetch('https://api.convert-file.ru/cityzen/add', {
      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
