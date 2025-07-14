@@ -6,7 +6,7 @@ export const useBaseStore = defineStore('base', () => {
   const config = ref('cityDistStreet')
   const cities: Ref<ICityRes> = ref({})
 
-  const getCityCountByName = (name:string) => {
+  const getCityCountByName = (name: string) => {
     return cities.value[name]
   }
 
@@ -22,14 +22,21 @@ export const useBaseStore = defineStore('base', () => {
   }
 
   async function saveCities(citiesNew: ICity[]) {
-    citiesNew.forEach(el => {
+    citiesNew.forEach((el) => {
       cities.value[el.name] = el.data
     })
   }
 
-  return { config, getCityCountByName, isItCity, cities, changeConfig, saveCities }
+  return {
+    config,
+    getCityCountByName,
+    isItCity,
+    cities,
+    changeConfig,
+    saveCities,
+  }
 })
 
 interface ICityRes {
-  [key:string]:string
+  [key: string]: string
 }

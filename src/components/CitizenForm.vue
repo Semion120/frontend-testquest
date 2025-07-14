@@ -1,56 +1,57 @@
 <script setup lang="ts">
-import API from '@/services/API';
-import type ICitizen from '@/types/citizen';
-import { ref } from 'vue';
+import API from '@/services/API'
+import type ICitizen from '@/types/citizen'
+import { ref } from 'vue'
 
 const emit = defineEmits(['submit'])
 
-const name = ref('');
-const country = ref('');
-const city = ref('');
-const district = ref('');
-const street = ref('');
-const house = ref('');
+const name = ref('')
+const country = ref('')
+const city = ref('')
+const district = ref('')
+const street = ref('')
+const house = ref('')
 
-const error = ref('');
+const error = ref('')
 
 async function handler() {
-  if ( !name.value ||
+  if (
+    !name.value ||
     !country.value ||
     !city.value ||
     !district.value ||
     !street.value ||
-    !house.value ) {
-      error.value = 'Заполнены не все обязательные поля'
-      return
-    }
+    !house.value
+  ) {
+    error.value = 'Заполнены не все обязательные поля'
+    return
+  }
 
-    const newCitizen: ICitizen = {
-      id:2,
-      _id: '',
-      name: name.value,
-      city_id: 1,
-      groups: {
-        country: country.value,
-        city: city.value + ' г.',
-        district: district.value + ' р-н',
-        street: street.value + ' ул.',
-        house: 'Дом ' + house.value,
-      }
-    }
-    emit('submit', newCitizen)
-    const result = await API.addUserToDataBase(newCitizen)
-    console.log(result)
+  const newCitizen: ICitizen = {
+    id: 2,
+    _id: '',
+    name: name.value,
+    city_id: 1,
+    groups: {
+      country: country.value,
+      city: city.value + ' г.',
+      district: district.value + ' р-н',
+      street: street.value + ' ул.',
+      house: 'Дом ' + house.value,
+    },
+  }
+  emit('submit', newCitizen)
+  const result = await API.addUserToDataBase(newCitizen)
+  console.log(result)
 
-    name.value = ''
-    country.value = ''
-    city.value = ''
-    district.value = ''
-    street.value = ''
-    house.value = ''
-    error.value = ''
+  name.value = ''
+  country.value = ''
+  city.value = ''
+  district.value = ''
+  street.value = ''
+  house.value = ''
+  error.value = ''
 }
-
 </script>
 
 <template>
@@ -63,7 +64,12 @@ async function handler() {
 
     <div>
       <label for="country">Страна:</label>
-      <input id="country" v-model.trim="country" placeholder="Ваша страна" required />
+      <input
+        id="country"
+        v-model.trim="country"
+        placeholder="Ваша страна"
+        required
+      />
     </div>
 
     <div>
@@ -73,17 +79,32 @@ async function handler() {
 
     <div>
       <label for="district">Район:</label>
-      <input id="district" v-model.trim="district" placeholder="Ваш район" required />
+      <input
+        id="district"
+        v-model.trim="district"
+        placeholder="Ваш район"
+        required
+      />
     </div>
 
     <div>
       <label for="street">Улица:</label>
-      <input id="street" v-model.trim="street" placeholder="Название улицы" required />
+      <input
+        id="street"
+        v-model.trim="street"
+        placeholder="Название улицы"
+        required
+      />
     </div>
 
     <div>
       <label for="house">Адрес (номер дома):</label>
-      <input id="house" v-model.trim="house" placeholder="Дом, квартира" required />
+      <input
+        id="house"
+        v-model.trim="house"
+        placeholder="Дом, квартира"
+        required
+      />
     </div>
 
     <button type="submit" @click="handler">Добавить жителя</button>

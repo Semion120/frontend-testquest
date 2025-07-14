@@ -1,25 +1,37 @@
-import type ICitizen from "@/types/citizen"
-import type ICity from "@/types/city"
+import type ICitizen from '@/types/citizen'
+import type ICity from '@/types/city'
 
-async function fetchCitizens( ) {
+async function fetchCitizens() {
   try {
-    const result: ICitizen[] = await (await fetch('https://api.convert-file.ru/cityzen')).json()
-    return {data:result, error:undefined}
-  } catch(err: unknown) {
+    const result: ICitizen[] = await (
+      await fetch('https://api.convert-file.ru/cityzen')
+    ).json()
+    return { data: result, error: undefined }
+  } catch (err: unknown) {
     return {
-      data:undefined,
-      error: err instanceof Error ? err.message : 'Ошибка при запросе горожан с сервера'}
+      data: undefined,
+      error:
+        err instanceof Error
+          ? err.message
+          : 'Ошибка при запросе горожан с сервера',
+    }
   }
 }
 
-async function fetchCities( ) {
+async function fetchCities() {
   try {
-    const result: ICity[] = await (await fetch('https://api.convert-file.ru/city')).json()
-    return {data:result, error:undefined}
-  } catch(err: unknown) {
+    const result: ICity[] = await (
+      await fetch('https://api.convert-file.ru/city')
+    ).json()
+    return { data: result, error: undefined }
+  } catch (err: unknown) {
     return {
-      data:undefined,
-      error: err instanceof Error ? err.message : 'Ошибка при запросе городов с сервера'}
+      data: undefined,
+      error:
+        err instanceof Error
+          ? err.message
+          : 'Ошибка при запросе городов с сервера',
+    }
   }
 }
 
@@ -32,18 +44,17 @@ async function addUserToDataBase(newCitizen: ICitizen) {
   newCitizenDatabase.groups = []
 
   for (const key in newCitizen.groups) {
-    newCitizenDatabase.groups.push({type: key, name: newCitizen.groups[key]})
+    newCitizenDatabase.groups.push({ type: key, name: newCitizen.groups[key] })
   }
 
   const result = await fetch('https://api.convert-file.ru/cityzen/add', {
-     method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newCitizenDatabase),
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newCitizenDatabase),
   })
-  return {status: result.status}
+  return { status: result.status }
 }
-
 
 export default { fetchCitizens, fetchCities, addUserToDataBase }
